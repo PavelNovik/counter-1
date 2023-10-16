@@ -5,9 +5,10 @@ import Settings from "./components/Settings/Settings";
 
 function App() {
     const [counter, setCounter] = useState(0)
-    const [maxVal, setMaxVal] = useState(0)
+    const [maxVal, setMaxVal] = useState(5)
     const [startVal, setStartVal] = useState(0)
-    const [error, setError] = useState(false)
+    const [isError, setIsError] = useState(false)
+    const [userMessage, setUserMessage] = useState<null | string>(null)
 
     useEffect(() => {
         const currVal = localStorage.getItem('countVal')
@@ -26,9 +27,11 @@ function App() {
 
     useEffect(() => {
         if (startVal < 0 || startVal >= maxVal) {
-            setError(true)
+            setIsError(true)
+            setUserMessage('incorrect value!')
         } else {
-            setError(false)
+            setIsError(false)
+            // setUserMessage('enter values and press \'set\'')
         }
     }, [startVal, maxVal]);
     // useEffect(() => {
@@ -47,21 +50,24 @@ function App() {
     }
     const onChangeMaxVal = (e: ChangeEvent<HTMLInputElement>) => {
         setMaxVal(JSON.parse(e.currentTarget.value))
+        setUserMessage('enter values and press \'set\'')
     }
     const onChangeStartVal = (e: ChangeEvent<HTMLInputElement>) => {
         setStartVal(JSON.parse(e.currentTarget.value))
+        setUserMessage('enter values and press \'set\'')
     }
     const setSettingsHandler = () => {
         localStorage.setItem('maxVal', JSON.stringify(maxVal))
         localStorage.setItem('startVal', JSON.stringify(startVal))
         setCounter(startVal)
+        setUserMessage(null)
     }
 
     return (
         <div className="App">
-            <Settings startVal={startVal} maxVal={maxVal} error={error} onChangeMaxVal={onChangeMaxVal}
+            <Settings startVal={startVal} maxVal={maxVal} isError={isError} onChangeMaxVal={onChangeMaxVal}
                       onChangeStartVal={onChangeStartVal} setSettingsHandler={setSettingsHandler}/>
-            <Counter counter={counter} error={error} maxVal={maxVal} increaseCounterHandler={increaseCounterHandler}
+            <Counter counter={counter} userMessage={userMessage} isError={isError} maxVal={maxVal} increaseCounterHandler={increaseCounterHandler}
                      resetCounterHandler={resetCounterHandler}/>
 
         </div>
