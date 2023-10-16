@@ -1,7 +1,6 @@
 import React, {ChangeEvent, FC} from 'react';
 import {Wrapper} from "../Wrapper";
 import {Button} from "../Button/Button";
-import {S} from '../Input/Input_Styles'
 import {Input} from "../Input/Input";
 
 type SettingsProps = {
