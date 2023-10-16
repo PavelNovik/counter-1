@@ -1,8 +1,5 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import './App.css';
-import {Wrapper} from "./components/Wrapper";
-import {Input} from "./components/Input";
-import {Button} from "./components/Button/Button";
 import Counter from "./components/Counter/Counter";
 import Settings from "./components/Settings/Settings";
 
