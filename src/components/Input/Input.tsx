@@ -10,7 +10,7 @@ type InputProps = {
 }
 export const Input: FC<InputProps> = (props) => {
     return (
-        <label htmlFor={props.name}>max value:
+        <label htmlFor={props.name}>{props.name} :
             <S.Input name={props.name} id={props.name} type={props.type} onChange={props.onChangeVal}
                      value={props.value}
                      isError={props.isError}/>

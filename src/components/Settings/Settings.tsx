@@ -4,6 +4,7 @@ import {Button} from "../Button/Button";
 import {Input} from "../Input/Input";
 
 type SettingsProps = {
+    userMessage: null | string
     maxVal: number
     startVal: number
     isError: boolean
@@ -18,17 +19,18 @@ const Settings: FC<SettingsProps> = ({
                                          isError,
                                          onChangeMaxVal,
                                          onChangeStartVal,
-                                         setSettingsHandler
+                                         setSettingsHandler,
+                                         userMessage
                                      }) => {
     return (
-        <Wrapper className="wrapper" $width={'500px'} $height={'310px'}>
-            <Wrapper className="wrapper" $width={'460px'} $height={'160px'}>
+        <Wrapper>
+            <Wrapper className="wrapperTop">
                 <Input name={'maxVal'} type={'number'} onChangeVal={onChangeMaxVal} value={maxVal} isError={isError}/>
                 <Input name={'startVal'} type={'number'} onChangeVal={onChangeStartVal} value={startVal}
                        isError={isError}/>
             </Wrapper>
-            <Wrapper className="wrapper" $width={'460px'} $height={'90px'}>
-                <Button onClick={setSettingsHandler} disabled={isError} name={'set'}/>
+            <Wrapper className="wrapperBottom">
+                <Button onClick={setSettingsHandler} disabled={isError || !userMessage} name={'set'}/>
             </Wrapper>
 
         </Wrapper>
