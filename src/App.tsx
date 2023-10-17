@@ -40,6 +40,7 @@ function App() {
 
     const resetCounterHandler = () => {
         setCounter(startVal)
+        localStorage.setItem('countVal', JSON.stringify(startVal))
     }
     const increaseCounterHandler = () => {
         setCounter( prevState => {
@@ -65,7 +66,7 @@ function App() {
 
     return (
         <div className="App">
-            <Settings startVal={startVal} maxVal={maxVal} isError={isError} onChangeMaxVal={onChangeMaxVal}
+            <Settings userMessage={userMessage} startVal={startVal} maxVal={maxVal} isError={isError} onChangeMaxVal={onChangeMaxVal}
                       onChangeStartVal={onChangeStartVal} setSettingsHandler={setSettingsHandler}/>
             <Counter counter={counter} userMessage={userMessage} isError={isError} maxVal={maxVal} increaseCounterHandler={increaseCounterHandler}
                      resetCounterHandler={resetCounterHandler}/>

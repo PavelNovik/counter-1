@@ -2,14 +2,12 @@ import styled from "styled-components";
 
 type WrapperType = {
     $direction?: string
-    $width?: string
-    $height?: string
     $jc?: string
 }
 
 export const Wrapper = styled.div<WrapperType>`
-  width: ${props => props.$width};
-  height: ${props => props.$height};
+  width: 500px;
+  height: 310px;
   background-color: transparent;
   border: 3px solid cadetblue;
   border-radius: 10px;
@@ -24,6 +22,16 @@ export const Wrapper = styled.div<WrapperType>`
   color: cadetblue;
   font-size: 30px;
   
+  & & {
+    width: 460px;
+  }
+  
+  & .wrapperTop {
+    height: 160px;
+  }
+  & .wrapperBottom {
+    height: 90px;
+  }
   & .display {
     font-size: 50px;
     font-weight: bold;
