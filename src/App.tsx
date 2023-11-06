@@ -49,12 +49,12 @@ function App() {
             return newState
         })
     }
-    const onChangeMaxVal = (e: ChangeEvent<HTMLInputElement>) => {
-        setMaxVal(JSON.parse(e.currentTarget.value))
+    const onChangeMaxVal = (value: string) => {
+        setMaxVal(JSON.parse(value))
         setUserMessage('enter values and press \'set\'')
     }
-    const onChangeStartVal = (e: ChangeEvent<HTMLInputElement>) => {
-        setStartVal(JSON.parse(e.currentTarget.value))
+    const onChangeStartVal = (value: string) => {
+        setStartVal(JSON.parse(value))
         setUserMessage('enter values and press \'set\'')
     }
     const setSettingsHandler = () => {

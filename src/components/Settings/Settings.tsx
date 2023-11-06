@@ -8,8 +8,8 @@ type SettingsProps = {
     maxVal: number
     startVal: number
     isError: boolean
-    onChangeMaxVal: (e: ChangeEvent<HTMLInputElement>) => void
-    onChangeStartVal: (e: ChangeEvent<HTMLInputElement>) => void
+    onChangeMaxVal: (value: string) => void
+    onChangeStartVal: (value: string) => void
     setSettingsHandler: () => void
 }
 
