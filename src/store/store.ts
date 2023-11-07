@@ -9,12 +9,14 @@ type StateType = {
 
 export type StoreType = {
     _state: StateType
+    _subscriber: () => void
     getState: () => StateType
     increaseCount: () => void
     resetCount: () => void
     changeMaxVal: (value: string) => void
     changeStartVal: (value: string) => void
-    setChanges: ()=> void
+    setChanges: () => void
+    subscriber: (observer: () => void) => void
 }
 
 export const store: StoreType = {
@@ -25,6 +27,9 @@ export const store: StoreType = {
         isSettings: false,
         isError: false,
         userMessage: null
+    },
+    _subscriber() {
+        console.log(this)
     },
     getState() {
         return this._state
@@ -50,6 +55,9 @@ export const store: StoreType = {
     setChanges() {
         this._state.counter = this._state.startVal
         this._state.isSettings = false
+    },
+    subscriber(observer) {
+        this._subscriber=observer
     }
 
 }
