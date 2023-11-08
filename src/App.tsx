@@ -2,8 +2,14 @@ import React, {ChangeEvent, useEffect, useState} from 'react';
 import './App.css';
 import Counter from "./components/Counter/Counter";
 import Settings from "./components/Settings/Settings";
+import {StoreType} from "./store/store";
 
-function App() {
+type AppPropsType = {
+    store: StoreType
+}
+
+function App(props: AppPropsType) {
+    const store = props.store
     const [counter, setCounter] = useState(0)
     const [maxVal, setMaxVal] = useState(5)
     const [startVal, setStartVal] = useState(0)
