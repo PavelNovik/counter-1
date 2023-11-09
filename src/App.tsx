@@ -8,7 +8,7 @@ import {
     increaseCountAC,
     resetCountAC,
     setCounterAC,
-    setErrorAC,
+    setErrorAC, setUserMessageAC,
     StoreType
 } from "./store/store";
 
@@ -26,16 +26,13 @@ function App({store}: AppPropsType) {
     const startVal = state.startVal
     // const [isError, setIsError] = useState(false)
     const isError = state.isError
-    const [userMessage, setUserMessage] = useState<null | string>(null)
+    // const [userMessage, setUserMessage] = useState<null | string>(null)
 
+    const userMessage = state.userMessage
     useEffect(() => {
         const currVal = localStorage.getItem('countVal')
         const currStartVal = localStorage.getItem('startVal')
         const currMaxVal = localStorage.getItem('maxVal')
-        if (currVal) {
-            // setCounter(JSON.parse(currVal))
-            store.dispatch(setCounterAC(+currVal))
-        }
         if (currStartVal) {
             // setStartVal(JSON.parse(currStartVal))
             store.dispatch(changeStartValAC(+currStartVal))
@@ -43,6 +40,10 @@ function App({store}: AppPropsType) {
         if (currMaxVal) {
             // setMaxVal(JSON.parse(currMaxVal))
             store.dispatch(changeMaxValAC(+currMaxVal))
+        }
+        if (currVal) {
+            // setCounter(JSON.parse(currVal))
+            store.dispatch(setCounterAC(+currVal))
         }
     }, []);
 
@@ -77,19 +78,22 @@ function App({store}: AppPropsType) {
     const onChangeMaxVal = (value: string) => {
         // setMaxVal(JSON.parse(value))
         store.dispatch(changeMaxValAC(+value))
-        setUserMessage('enter values and press \'set\'')
+        // store.dispatch(setUserMessageAC('enter values and press \'set\''))
+        // setUserMessage('enter values and press \'set\'')
     }
     const onChangeStartVal = (value: string) => {
         // setStartVal(JSON.parse(value))
         store.dispatch(changeStartValAC(+value))
-        setUserMessage('enter values and press \'set\'')
+        // store.dispatch(setUserMessageAC('enter values and press \'set\''))
+        // setUserMessage('enter values and press \'set\'')
     }
     const setSettingsHandler = () => {
         // localStorage.setItem('maxVal', JSON.stringify(maxVal))
         // localStorage.setItem('startVal', JSON.stringify(startVal))
         // setCounter(startVal)
         store.dispatch(setCounterAC(startVal))
-        setUserMessage(null)
+        // store.dispatch(setUserMessageAC(null))
+        // setUserMessage(null)
     }
 
     return (

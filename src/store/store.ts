@@ -45,12 +45,14 @@ export const store: StoreType = {
             }
             case 'RESET_COUNT': {
                 this._state.counter = this._state.startVal
+                localStorage.setItem('countVal', JSON.stringify(this._state.counter))
                 this._subscriber()
                 return this._state
             }
             case 'SET_COUNTER': {
                 this._state.counter = action.payload.value
-                // this._state.isSettings = false
+                this._state.isSettings = false
+                this._state.userMessage = null
                 this._subscriber()
                 return this._state
             }
@@ -58,6 +60,7 @@ export const store: StoreType = {
                 const maxVal = action.payload.value
                 this._state.isSettings = true
                 maxVal <= this._state.startVal || maxVal < 0 || this._state.startVal < 0 ? this._state.isError = true : this._state.isError = false
+                this._state.userMessage = this._state.isError ? 'incorrect value!' : 'enter values and press \'set\''
                 this._state.maxVal = maxVal
                 localStorage.setItem('maxVal', JSON.stringify(this._state.maxVal))
                 this._subscriber()
@@ -66,7 +69,8 @@ export const store: StoreType = {
             case 'CHANGE_START_VAL': {
                 const startVal = action.payload.value
                 this._state.isSettings = true
-                startVal < 0 || startVal >= this._state.maxVal || this._state.maxVal < 0? this._state.isError = true : this._state.isError = false
+                startVal < 0 || startVal >= this._state.maxVal || this._state.maxVal < 0 ? this._state.isError = true : this._state.isError = false
+                this._state.userMessage = this._state.isError ? 'incorrect value!' : 'enter values and press \'set\''
                 this._state.startVal = startVal
                 localStorage.setItem('startVal', JSON.stringify(this._state.startVal))
                 this._subscriber()
@@ -75,12 +79,17 @@ export const store: StoreType = {
             case 'SET_CHANGES': {
                 this._state.counter = this._state.startVal
                 this._state.isSettings = false
+                this._state.userMessage = null
                 this._subscriber()
                 return this._state
             }
             case 'SET_ERROR': {
                 this._state.isError = action.payload.isError
                 this._subscriber()
+                return this._state
+            }
+            case 'SET_USER_MESSAGE': {
+                this._state.userMessage = action.payload.message
                 return this._state
             }
             default: {
@@ -124,6 +133,7 @@ type ActionDispatchType =
     | SetChangesType
     | SetCounterType
     | SetErrorACType
+    | SetUserMessageACType
 
 type IncreaseCountACType = ReturnType<typeof increaseCountAC>
 export const increaseCountAC = () => {
@@ -181,5 +191,14 @@ export const setChangesAC = () => {
     return {
         type: 'SET_CHANGES',
         payload: {}
+    } as const
+}
+type SetUserMessageACType = ReturnType<typeof setUserMessageAC>
+export const setUserMessageAC = (message: string | null) => {
+    return {
+        type: 'SET_USER_MESSAGE',
+        payload: {
+            message
+        }
     } as const
 }
