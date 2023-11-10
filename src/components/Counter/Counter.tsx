@@ -2,32 +2,24 @@ import React, {FC} from 'react';
 import {Wrapper} from "../Wrapper";
 import {Button} from "../Button/Button";
 import {Display} from "../Display/Display";
+import {StateType} from "../../store/store";
 
 type CounterProps = {
-    counter: number
-    maxVal: number
-    isError: boolean
+    state: StateType
     increaseCounterHandler: () => void
     resetCounterHandler: () => void
-    userMessage: null | string
 }
 
-const Counter: FC<CounterProps> = ({
-                                       counter,
-                                       maxVal,
-                                       isError,
-                                       increaseCounterHandler,
-                                       resetCounterHandler,
-                                       userMessage
-                                   }) => {
+const Counter: FC<CounterProps> = ({state, increaseCounterHandler, resetCounterHandler}) => {
     return (
         <Wrapper>
             <Wrapper className="wrapperTop">
-                <Display isError={isError} userMessage={userMessage} counter={counter} maxVal={maxVal}/>
+                <Display state={state}/>
             </Wrapper>
             <Wrapper className="wrapperBottom" $direction={'row'} $jc={'space-evenly'}>
-                <Button disabled={!!userMessage || counter === maxVal} onClick={increaseCounterHandler} name={'inc'}/>
-                <Button onClick={resetCounterHandler} disabled={!!userMessage} name={'reset'}/>
+                <Button disabled={!!state.userMessage || state.counter === state.maxVal}
+                        onClick={increaseCounterHandler} name={'inc'}/>
+                <Button onClick={resetCounterHandler} disabled={!!state.userMessage} name={'reset'}/>
             </Wrapper>
 
         </Wrapper>

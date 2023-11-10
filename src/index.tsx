@@ -11,9 +11,9 @@ const root = ReactDOM.createRoot(
 
 const renderEntireTree = () => {
     root.render(
-        <React.StrictMode>
+        <React.Fragment>
             <App store={store}/>
-        </React.StrictMode>
+        </React.Fragment>
     );
 }
 renderEntireTree()

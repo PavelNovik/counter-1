@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
 type InputType = {
-    isError: boolean
+    error: boolean
 }
 
  const Input_Styles = styled.input<InputType>`
-  background-color: ${props => props.isError ? '#fa6a6a' : 'white'};
-  border-color: ${props => props.isError ? 'red' : 'default'};
-  outline-color: ${props => props.isError ? 'red' : 'default'};
+  background-color: ${props => props.error ? '#fa6a6a' : 'white'};
+  border-color: ${props => props.error ? 'red' : 'default'};
+  outline-color: ${props => props.error ? 'red' : 'default'};
   text-align: center;
   margin-left: 50px;
   height: 40px;

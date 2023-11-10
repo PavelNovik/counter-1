@@ -1,9 +1,11 @@
+import {setLocalStorage} from "./localStorage";
+
 export type StateType = {
     counter: number
     maxVal: number
     startVal: number
     isSettings: boolean
-    isError: boolean
+    error: boolean
     userMessage: null | string
 }
 
@@ -11,12 +13,7 @@ export type StoreType = {
     _state: StateType
     _subscriber: () => void
     getState: () => StateType
-    dispatch: (action: ActionDispatchType) => StateType
-    // increaseCount: () => void
-    // resetCount: () => void
-    // changeMaxVal: (value: string) => void
-    // changeStartVal: (value: string) => void
-    // setChanges: () => void
+    dispatch: (action: ActionDispatchType) => void
     subscriber: (observer: () => void) => void
 }
 
@@ -25,9 +22,9 @@ export const store: StoreType = {
         counter: 0,
         maxVal: 5,
         startVal: 0,
-        isSettings: false,
-        isError: false,
-        userMessage: null
+        isSettings: true,
+        error: false,
+        userMessage: 'enter values and press \'set\''
     },
     _subscriber() {
         console.log(this)
@@ -39,86 +36,49 @@ export const store: StoreType = {
         switch (action.type) {
             case 'INCREASE_COUNT': {
                 this._state.counter += 1
-                localStorage.setItem('countVal', JSON.stringify(this._state.counter))
+                setLocalStorage('countVal', this._state.counter)
                 this._subscriber()
-                return this._state
+                return
             }
             case 'RESET_COUNT': {
                 this._state.counter = this._state.startVal
-                localStorage.setItem('countVal', JSON.stringify(this._state.counter))
+                setLocalStorage('countVal', this._state.counter)
                 this._subscriber()
-                return this._state
+                return
             }
             case 'SET_COUNTER': {
                 this._state.counter = action.payload.value
                 this._state.isSettings = false
                 this._state.userMessage = null
                 this._subscriber()
-                return this._state
+                return
             }
             case 'CHANGE_MAX_VAL': {
                 const maxVal = action.payload.value
                 this._state.isSettings = true
-                maxVal <= this._state.startVal || maxVal < 0 || this._state.startVal < 0 ? this._state.isError = true : this._state.isError = false
-                this._state.userMessage = this._state.isError ? 'incorrect value!' : 'enter values and press \'set\''
+                maxVal <= this._state.startVal || maxVal < 0 || this._state.startVal < 0 ? this._state.error = true : this._state.error = false
+                this._state.userMessage = this._state.error ? 'incorrect value!' : 'enter values and press \'set\''
                 this._state.maxVal = maxVal
-                localStorage.setItem('maxVal', JSON.stringify(this._state.maxVal))
+                setLocalStorage('maxVal', this._state.maxVal)
                 this._subscriber()
-                return this._state
+                return
             }
             case 'CHANGE_START_VAL': {
                 const startVal = action.payload.value
                 this._state.isSettings = true
-                startVal < 0 || startVal >= this._state.maxVal || this._state.maxVal < 0 ? this._state.isError = true : this._state.isError = false
-                this._state.userMessage = this._state.isError ? 'incorrect value!' : 'enter values and press \'set\''
+                startVal < 0 || startVal >= this._state.maxVal || this._state.maxVal < 0 ? this._state.error = true : this._state.error = false
+                this._state.userMessage = this._state.error ? 'incorrect value!' : 'enter values and press \'set\''
                 this._state.startVal = startVal
-                localStorage.setItem('startVal', JSON.stringify(this._state.startVal))
+                setLocalStorage('startVal', this._state.startVal)
                 this._subscriber()
-                return this._state
-            }
-            case 'SET_CHANGES': {
-                this._state.counter = this._state.startVal
-                this._state.isSettings = false
-                this._state.userMessage = null
-                this._subscriber()
-                return this._state
-            }
-            case 'SET_ERROR': {
-                this._state.isError = action.payload.isError
-                this._subscriber()
-                return this._state
-            }
-            case 'SET_USER_MESSAGE': {
-                this._state.userMessage = action.payload.message
-                return this._state
+                return
             }
             default: {
-                return this._state
+                throw new Error('There are no this action.')
             }
         }
     },
-    // increaseCount() {
-    //     this._state.counter += 1
-    // },
-    // resetCount() {
-    //     this._state.counter = this._state.startVal
-    // },
-    // changeMaxVal(value: string) {
-    //     const maxVal = +value
-    //     this._state.isSettings = true
-    //     maxVal <= this._state.startVal ? this._state.isError = true : this._state.isError = false
-    //     this._state.maxVal = maxVal
-    // },
-    // changeStartVal(value: string) {
-    //     const startVal = +value
-    //     this._state.isSettings = true
-    //     startVal < 0 ? this._state.isError = true : this._state.isError = false
-    //     this._state.maxVal = startVal
-    // },
-    // setChanges() {
-    //     this._state.counter = this._state.startVal
-    //     this._state.isSettings = false
-    // },
+
     subscriber(observer) {
         this._subscriber = observer
     }
@@ -130,10 +90,7 @@ type ActionDispatchType =
     | ResetCountACType
     | ChangeMaxValACType
     | ChangeStartValACType
-    | SetChangesType
     | SetCounterType
-    | SetErrorACType
-    | SetUserMessageACType
 
 type IncreaseCountACType = ReturnType<typeof increaseCountAC>
 export const increaseCountAC = () => {
@@ -148,15 +105,6 @@ export const setCounterAC = (value: number) => {
         type: 'SET_COUNTER',
         payload: {
             value
-        }
-    } as const
-}
-type SetErrorACType = ReturnType<typeof setErrorAC>
-export const setErrorAC = (isError: boolean) => {
-    return {
-        type: 'SET_ERROR',
-        payload: {
-            isError
         }
     } as const
 }
@@ -183,22 +131,6 @@ export const changeStartValAC = (value: number) => {
         type: 'CHANGE_START_VAL',
         payload: {
             value
-        }
-    } as const
-}
-type SetChangesType = ReturnType<typeof setChangesAC>
-export const setChangesAC = () => {
-    return {
-        type: 'SET_CHANGES',
-        payload: {}
-    } as const
-}
-type SetUserMessageACType = ReturnType<typeof setUserMessageAC>
-export const setUserMessageAC = (message: string | null) => {
-    return {
-        type: 'SET_USER_MESSAGE',
-        payload: {
-            message
         }
     } as const
 }

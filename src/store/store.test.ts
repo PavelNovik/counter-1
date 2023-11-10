@@ -5,7 +5,7 @@ const state: StateType = {
     maxVal: 5,
     startVal: 0,
     isSettings: false,
-    isError: false,
+    error: false,
     userMessage: null
 }
 test('Get state', ()=> {
