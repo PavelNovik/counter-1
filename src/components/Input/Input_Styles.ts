@@ -5,9 +5,6 @@ type InputType = {
 }
 
  const Input_Styles = styled.input<InputType>`
-     // background-color: ${props => props.error ? '#fa6a6a' : 'white'};
-     // border-color: ${props => props.error ? 'red' : 'default'};
-     // outline-color: ${props => props.error ? 'red' : 'default'};
    background-color: white;
    border-color: transparent;
    outline-color: cadetblue;

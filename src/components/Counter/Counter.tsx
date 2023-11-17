@@ -2,15 +2,22 @@ import React, {FC} from 'react';
 import {Wrapper} from "../Wrapper";
 import {Button} from "../Button/Button";
 import {Display} from "../Display/Display";
-import {StateType} from "../../store/reducer";
+import {increaseCountAC, resetCountAC, StateType} from "../../store/reducer";
+import {useDispatch} from "react-redux";
 
 type CounterProps = {
     state: StateType
-    increaseCounterHandler: () => void
-    resetCounterHandler: () => void
 }
 
-const Counter: FC<CounterProps> = ({state, increaseCounterHandler, resetCounterHandler}) => {
+const Counter: FC<CounterProps> = ({state}) => {
+    const dispatch = useDispatch()
+
+    const resetCounterHandler = () => {
+        dispatch(resetCountAC())
+    }
+    const increaseCounterHandler = () => {
+        dispatch(increaseCountAC())
+    }
     return (
         <Wrapper>
             <Wrapper className="wrapperTop">

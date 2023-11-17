@@ -17,7 +17,7 @@ const initialState: StateType = {
     counter: currVal ? currVal : 0,
     maxVal: currMaxVal ? currMaxVal : 5,
     startVal: currStartVal ? currStartVal : 0,
-    isSettings: currVal ? false : true,
+    isSettings: !currVal,
     error: false,
     userMessage: currVal ? null : 'enter values and press \'set\''
 }
@@ -28,7 +28,6 @@ export const counterReducer = (state: StateType = initialState, action: ActionDi
         case 'INCREASE_COUNT': {
             state.counter += 1
             setLocalStorage('countVal', state.counter)
-
             return {...state}
         }
         case 'RESET_COUNT': {
@@ -40,6 +39,7 @@ export const counterReducer = (state: StateType = initialState, action: ActionDi
             state.counter = action.value
             state.isSettings = false
             state.userMessage = null
+            setLocalStorage('countVal', state.startVal)
             return {...state}
         }
         case 'CHANGE_MAX_VAL': {

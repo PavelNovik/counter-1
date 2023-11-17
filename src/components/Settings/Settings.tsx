@@ -2,21 +2,25 @@ import React, {FC} from 'react';
 import {Wrapper} from "../Wrapper";
 import {Button} from "../Button/Button";
 import {Input} from "../Input/Input";
-import {StateType} from "../../store/reducer";
+import {changeMaxValAC, changeStartValAC, setCounterAC, StateType} from "../../store/reducer";
+import {useDispatch} from "react-redux";
 
 type SettingsProps = {
     state: StateType
-    onChangeMaxVal: (value: string) => void
-    onChangeStartVal: (value: string) => void
-    setSettingsHandler: () => void
 }
 
-const Settings: FC<SettingsProps> = ({
-                                         onChangeMaxVal,
-                                         onChangeStartVal,
-                                         setSettingsHandler,
-                                         state
-                                     }) => {
+const Settings: FC<SettingsProps> = ({state}) => {
+    const dispatch = useDispatch()
+    const onChangeMaxVal = (value: string) => {
+        dispatch(changeMaxValAC(+value))
+    }
+    const onChangeStartVal = (value: string) => {
+        dispatch(changeStartValAC(+value))
+    }
+    const setSettingsHandler = () => {
+        dispatch(setCounterAC(state.startVal))
+    }
+
     return (
         <Wrapper>
             <Wrapper className="wrapperTop">

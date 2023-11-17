@@ -8,7 +8,7 @@ type InputProps = {
     value: number
     type: string
 }
-export const Input: FC<InputProps> = (props) => {
+const StyledInput: FC<InputProps> = (props) => {
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         props.onChangeVal(e.currentTarget.value)
     }
@@ -21,3 +21,4 @@ export const Input: FC<InputProps> = (props) => {
     );
 };
 
+export const Input = React.memo(StyledInput)

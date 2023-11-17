@@ -7,7 +7,7 @@ type ButtonProps = {
     name: string
 }
 
-export const Button: FC<ButtonProps> = ({onClick, disabled, name}) => {
+export const StyledButton: FC<ButtonProps> = ({onClick, disabled, name}) => {
     return (
         <S.Button disabled={disabled} onClick={onClick}>
             {name}
@@ -15,3 +15,4 @@ export const Button: FC<ButtonProps> = ({onClick, disabled, name}) => {
     );
 };
 
+export const Button = React.memo(StyledButton)
