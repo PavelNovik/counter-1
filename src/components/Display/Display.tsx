@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {StateType} from "../../store/store";
+import {StateType} from "../../store/reducer";
 
 type DisplayProps = {
     state: StateType

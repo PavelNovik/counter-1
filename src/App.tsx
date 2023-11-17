@@ -1,53 +1,38 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import Counter from "./components/Counter/Counter";
 import Settings from "./components/Settings/Settings";
+import {getFromLocalStorage} from "./store/localStorage";
 import {
     changeMaxValAC,
     changeStartValAC,
     increaseCountAC,
     resetCountAC,
     setCounterAC,
-    StoreType
-} from "./store/store";
-import {getFromLocalStorage} from "./store/localStorage";
+    StateType
+} from "./store/reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootState, store} from "./store/store";
 
-type AppPropsType = {
-    store: StoreType
-}
 
-function App({store}: AppPropsType) {
-    const state = store.getState()
-
-    useEffect(() => {
-        const currVal = getFromLocalStorage('countVal')
-        const currStartVal = getFromLocalStorage('startVal')
-        const currMaxVal = getFromLocalStorage('maxVal')
-        if (currStartVal) {
-            store.dispatch(changeStartValAC(currStartVal))
-        }
-        if (currMaxVal) {
-            store.dispatch(changeMaxValAC(currMaxVal))
-        }
-        if (currVal) {
-            store.dispatch(setCounterAC(currVal))
-        }
-    }, []);
+function App() {
+    const state = useSelector<AppRootState, StateType>(store => store.state)
+    const dispatch = useDispatch()
 
     const resetCounterHandler = () => {
-        store.dispatch(resetCountAC())
+        dispatch(resetCountAC())
     }
     const increaseCounterHandler = () => {
-        store.dispatch(increaseCountAC())
+        dispatch(increaseCountAC())
     }
     const onChangeMaxVal = (value: string) => {
-        store.dispatch(changeMaxValAC(+value))
+        dispatch(changeMaxValAC(+value))
     }
     const onChangeStartVal = (value: string) => {
-        store.dispatch(changeStartValAC(+value))
+        dispatch(changeStartValAC(+value))
     }
     const setSettingsHandler = () => {
-        store.dispatch(setCounterAC(state.startVal))
+        dispatch(setCounterAC(state.startVal))
     }
 
     return (

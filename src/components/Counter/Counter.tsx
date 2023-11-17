@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import {Wrapper} from "../Wrapper";
 import {Button} from "../Button/Button";
 import {Display} from "../Display/Display";
-import {StateType} from "../../store/store";
+import {StateType} from "../../store/reducer";
 
 type CounterProps = {
     state: StateType

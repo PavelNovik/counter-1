@@ -1,8 +1,8 @@
-import React, {ChangeEvent, FC} from 'react';
+import React, {FC} from 'react';
 import {Wrapper} from "../Wrapper";
 import {Button} from "../Button/Button";
 import {Input} from "../Input/Input";
-import {StateType} from "../../store/store";
+import {StateType} from "../../store/reducer";
 
 type SettingsProps = {
     state: StateType
