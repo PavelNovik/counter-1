@@ -1,11 +1,8 @@
 import styled from "styled-components";
+import React from "react";
 
-type WrapperType = {
-    $direction?: string
-    $jc?: string
-}
 
-export const Wrapper = styled.div<WrapperType>`
+const StyledWrapper = styled.div`
   width: 500px;
   height: 310px;
   background-color: transparent;
@@ -15,26 +12,32 @@ export const Wrapper = styled.div<WrapperType>`
   margin: 5px;
   display: flex;
   gap: 10px;
-  flex-direction: ${props => props.$direction || 'column'};
+  flex-direction: column;
   text-align: center;
-  justify-content: ${props => props.$jc || 'center'};
+  justify-content: center;
   align-items: center;
   color: cadetblue;
   font-size: 30px;
-  
+
   & & {
     width: 460px;
   }
-  
+
   & .wrapperTop {
     height: 160px;
   }
+
   & .wrapperBottom {
     height: 90px;
+    flex-direction: row;
+    justify-content: space-evenly;
   }
+
   & .display {
     font-size: 50px;
     font-weight: bold;
   }
-  
+
 `
+
+export const Wrapper = React.memo(StyledWrapper)

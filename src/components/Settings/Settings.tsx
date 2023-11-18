@@ -1,36 +1,39 @@
-import React, {FC} from 'react';
+import React, {FC, useCallback, useMemo} from 'react';
 import {Wrapper} from "../Wrapper";
 import {Button} from "../Button/Button";
 import {Input} from "../Input/Input";
 import {changeMaxValAC, changeStartValAC, setCounterAC, StateType} from "../../store/reducer";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootState} from "../../store/store";
 
-type SettingsProps = {
-    state: StateType
-}
-
-const Settings: FC<SettingsProps> = ({state}) => {
+const Settings = () => {
+    const state = useSelector<AppRootState, StateType>(store => store.state)
     const dispatch = useDispatch()
-    const onChangeMaxVal = (value: string) => {
+    const onChangeMaxVal = useCallback((value: string) => {
         dispatch(changeMaxValAC(+value))
-    }
-    const onChangeStartVal = (value: string) => {
+    },[state.maxVal])
+    const onChangeStartVal = useCallback((value: string) => {
         dispatch(changeStartValAC(+value))
-    }
-    const setSettingsHandler = () => {
+    },[state.startVal])
+    const setSettingsHandler =useCallback(() => {
         dispatch(setCounterAC(state.startVal))
-    }
+    },[state.isSettings])
+
+    const error = useMemo(()=>state.error,[state.error])
+    const userMessage = useMemo(()=>state.userMessage,[state.userMessage])
+    const maxVal = useMemo(()=>state.maxVal,[state.maxVal])
+    const startVal = useMemo(()=>state.startVal,[state.startVal])
 
     return (
         <Wrapper>
             <Wrapper className="wrapperTop">
-                <Input name={'maxVal'} type={'number'} onChangeVal={onChangeMaxVal} value={state.maxVal}
-                       error={state.error}/>
-                <Input name={'startVal'} type={'number'} onChangeVal={onChangeStartVal} value={state.startVal}
-                       error={state.error}/>
+                <Input name={'maxVal'} type={'number'} onChangeVal={onChangeMaxVal} value={maxVal}
+                       error={error}/>
+                <Input name={'startVal'} type={'number'} onChangeVal={onChangeStartVal} value={startVal}
+                       error={error}/>
             </Wrapper>
             <Wrapper className="wrapperBottom">
-                <Button onClick={setSettingsHandler} disabled={state.error || !state.userMessage} name={'set'}/>
+                <Button onClick={setSettingsHandler} disabled={error || !userMessage} name={'set'}/>
             </Wrapper>
 
         </Wrapper>
