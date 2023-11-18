@@ -1,4 +1,4 @@
-import {getFromLocalStorage, setLocalStorage} from "./localStorage";
+import { getFromLocalStorage, setLocalStorage } from "./localStorage";
 
 export type StateType = {
     counter: number
@@ -26,21 +26,21 @@ const initialState: StateType = {
 export const counterReducer = (state: StateType = initialState, action: ActionDispatchType): StateType => {
     switch (action.type) {
         case 'INCREASE_COUNT': {
-            state.counter += 1
-            setLocalStorage('countVal', state.counter)
-            return {...state}
+            const counter = state.counter + 1
+            setLocalStorage('countVal', counter)
+            return { ...state, counter }
         }
         case 'RESET_COUNT': {
-            state.counter = state.startVal
-            setLocalStorage('countVal', state.counter)
-            return {...state}
+            const counter = state.startVal
+            setLocalStorage('countVal', counter)
+            return { ...state, counter }
         }
         case 'SET_COUNTER': {
-            state.counter = action.value
-            state.isSettings = false
-            state.userMessage = null
-            setLocalStorage('countVal', state.startVal)
-            return {...state}
+            const value = state.startVal
+            const isSettings = false
+            const userMessage = null
+            setLocalStorage('countVal', value)
+            return { ...state, counter: value, isSettings, userMessage }
         }
         case 'CHANGE_MAX_VAL': {
             const maxVal = action.value
@@ -49,7 +49,7 @@ export const counterReducer = (state: StateType = initialState, action: ActionDi
             state.userMessage = state.error ? 'incorrect value!' : 'enter values and press \'set\''
             state.maxVal = maxVal
             setLocalStorage('maxVal', state.maxVal)
-            return {...state}
+            return { ...state }
         }
         case 'CHANGE_START_VAL': {
             const startVal = action.value
@@ -58,7 +58,7 @@ export const counterReducer = (state: StateType = initialState, action: ActionDi
             state.userMessage = state.error ? 'incorrect value!' : 'enter values and press \'set\''
             state.startVal = startVal
             setLocalStorage('startVal', state.startVal)
-            return {...state}
+            return { ...state }
         }
         default: {
             return state
@@ -80,10 +80,9 @@ export const increaseCountAC = () => {
     } as const
 }
 type SetCounterType = ReturnType<typeof setCounterAC>
-export const setCounterAC = (value: number) => {
+export const setCounterAC = () => {
     return {
         type: 'SET_COUNTER',
-        value
     } as const
 }
 
