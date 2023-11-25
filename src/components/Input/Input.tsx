@@ -9,6 +9,7 @@ type InputProps = {
     type: string
 }
 const StyledInput: FC<InputProps> = (props) => {
+    console.log('input')
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         props.onChangeVal(e.currentTarget.value)
     }

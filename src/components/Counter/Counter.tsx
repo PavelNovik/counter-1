@@ -8,6 +8,7 @@ import {AppRootState} from "../../store/store";
 
 
 const Counter: FC = () => {
+    console.log('counter')
     const state = useSelector<AppRootState, StateType>(store => store.state)
     const dispatch = useDispatch()
 

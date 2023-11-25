@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppRootState } from "../../store/store";
 
 const Settings: FC = () => {
+    console.log('settings')
     const state = useSelector<AppRootState, StateType>(store => store.state)
     const dispatch = useDispatch()
     const onChangeMaxVal = useCallback((value: string) => {
@@ -19,10 +20,10 @@ const Settings: FC = () => {
         dispatch(setCounterAC())
     }, [dispatch])
 
-    const error = useMemo(() => state.error, [state.error])
-    const userMessage = useMemo(() => state.userMessage, [state.userMessage])
-    const maxVal = useMemo(() => state.maxVal, [state.maxVal])
-    const startVal = useMemo(() => state.startVal, [state.startVal])
+    const error = useMemo(() => state.error, [state])
+    const userMessage = useMemo(() => state.userMessage, [state])
+    const maxVal = useMemo(() => state.maxVal, [state])
+    const startVal = useMemo(() => state.startVal, [state])
 
     return (
         <Wrapper>

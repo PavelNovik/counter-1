@@ -2,7 +2,7 @@ import styled from "styled-components";
 import React from "react";
 
 
-const StyledWrapper = styled.div`
+export const Wrapper = styled.div`
   width: 500px;
   height: 310px;
   background-color: transparent;
@@ -40,4 +40,4 @@ const StyledWrapper = styled.div`
 
 `
 
-export const Wrapper = React.memo(StyledWrapper)
+// export const Wrapper = React.memo(StyledWrapper)

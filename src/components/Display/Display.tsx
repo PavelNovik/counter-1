@@ -5,9 +5,10 @@ import {AppRootState} from "../../store/store";
 
 
 const StyledDisplay: FC = () => {
+    console.log('display')
     const state = useSelector<AppRootState, StateType>(store => store.state)
-    const userMessage = useMemo(()=> state.userMessage, [state.userMessage])
-    const counter = useMemo(()=> state.counter, [state.counter])
+    const userMessage = useMemo(()=> state.userMessage, [state])
+    const counter = useMemo(()=> state.counter, [state])
     const redColor = (!state.isSettings && counter === state.maxVal) || state.error? "red" : ''
     return (
         <div className="display"
