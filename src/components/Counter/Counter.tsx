@@ -1,4 +1,4 @@
-import React, {FC, useCallback} from 'react';
+import React, {FC, useCallback, useMemo} from 'react';
 import {Wrapper} from "../Wrapper";
 import {Button} from "../Button/Button";
 import {Display} from "../Display/Display";
@@ -11,6 +11,8 @@ const Counter: FC = () => {
     console.log('counter')
     const state = useSelector<AppRootState, StateType>(store => store.state)
     const dispatch = useDispatch()
+    const disableCounterBtn = useMemo(()=> !!state.userMessage || state.counter === state.maxVal, [state])
+    const disableResetBtn = useMemo(()=> !!state.userMessage,[state])
 
     const resetCounterHandler = useCallback(() => {
         dispatch(resetCountAC())
@@ -24,9 +26,9 @@ const Counter: FC = () => {
                 <Display/>
             </Wrapper>
             <Wrapper className="wrapperBottom">
-                <Button disabled={!!state.userMessage || state.counter === state.maxVal}
+                <Button disabled={disableCounterBtn}
                         onClick={increaseCounterHandler} name={'inc'}/>
-                <Button onClick={resetCounterHandler} disabled={!!state.userMessage} name={'reset'}/>
+                <Button onClick={resetCounterHandler} disabled={disableResetBtn} name={'reset'}/>
             </Wrapper>
 
         </Wrapper>

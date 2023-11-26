@@ -1,10 +1,10 @@
-import React, { FC, useCallback, useMemo } from 'react';
-import { Wrapper } from "../Wrapper";
-import { Button } from "../Button/Button";
-import { Input } from "../Input/Input";
-import { changeMaxValAC, changeStartValAC, setCounterAC, StateType } from "../../store/reducer";
-import { useDispatch, useSelector } from "react-redux";
-import { AppRootState } from "../../store/store";
+import React, {FC, useCallback, useMemo} from 'react';
+import {Wrapper} from "../Wrapper";
+import {Button} from "../Button/Button";
+import {Input} from "../Input/Input";
+import {changeMaxValAC, changeStartValAC, setCounterAC, StateType} from "../../store/reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootState} from "../../store/store";
 
 const Settings: FC = () => {
     console.log('settings')
@@ -28,13 +28,11 @@ const Settings: FC = () => {
     return (
         <Wrapper>
             <Wrapper className="wrapperTop">
-                <Input name={'maxVal'} type={'number'} onChangeVal={onChangeMaxVal} value={maxVal}
-                    error={error} />
-                <Input name={'startVal'} type={'number'} onChangeVal={onChangeStartVal} value={startVal}
-                    error={error} />
+                <Input name={'maxVal'} type={'number'} onChangeVal={onChangeMaxVal} value={maxVal}/>
+                <Input name={'startVal'} type={'number'} onChangeVal={onChangeStartVal} value={startVal}/>
             </Wrapper>
             <Wrapper className="wrapperBottom">
-                <Button onClick={setSettingsHandler} disabled={error || !userMessage} name={'set'} />
+                <Button onClick={setSettingsHandler} disabled={error || !userMessage} name={'set'}/>
             </Wrapper>
 
         </Wrapper>

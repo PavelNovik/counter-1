@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 import {AppRootState} from "../../store/store";
 
 
-const StyledDisplay: FC = () => {
+export const Display: FC = React.memo(() => {
     console.log('display')
     const state = useSelector<AppRootState, StateType>(store => store.state)
     const userMessage = useMemo(()=> state.userMessage, [state])
@@ -15,6 +15,4 @@ const StyledDisplay: FC = () => {
              style={{color: redColor }}>{userMessage ? userMessage : counter}
         </div>
     );
-};
-export const Display = React.memo(StyledDisplay)
-
+})
